@@ -7,9 +7,9 @@ export default {
         dark: '#080808',
         'dark-card': '#111111',
         'dark-border': '#1a1a1a',
-        neon: '#39FF14',
+        neon: '#4DE8FF',
         'neon-red': '#FF2D55',
-        gold: '#FFD700',
+        gold: '#4DE8FF',
         'off-white': '#F0F0F0',
       },
       fontFamily: {
@@ -18,9 +18,9 @@ export default {
         mono: ['"Courier New"', 'monospace'],
       },
       boxShadow: {
-        neon: '0 0 15px rgba(57, 255, 20, 0.5)',
+        neon: '0 0 20px rgba(77, 232, 255, 0.5), 0 0 40px rgba(77, 232, 255, 0.2)',
         'neon-red': '0 0 15px rgba(255, 45, 85, 0.5)',
-        gold: '0 0 15px rgba(255, 215, 0, 0.4)',
+        gold: '0 0 20px rgba(77, 232, 255, 0.5), 0 0 40px rgba(77, 232, 255, 0.2)',
       },
     },
   },

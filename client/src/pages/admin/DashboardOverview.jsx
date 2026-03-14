@@ -74,7 +74,7 @@ export default function DashboardOverview() {
                   contentStyle={{ backgroundColor: '#111', border: '1px solid #1a1a1a' }}
                   labelStyle={{ color: '#F0F0F0' }}
                 />
-                <Bar dataKey="views" fill="#39FF14" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="views" fill="#4DE8FF" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

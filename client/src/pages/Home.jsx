@@ -50,13 +50,13 @@ export default function Home() {
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        {/* Gradient overlay — dark vignette from bottom-left */}
+        {/* Gradient overlay — dark vignette from bottom-left + fade to dark at bottom */}
         <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent" />
 
         {/* Content — bottom-left aligned like reference */}
         <div className="relative z-10 px-8 md:px-16 pb-20 md:pb-28 max-w-3xl">
-          <h1 className="font-bebas text-white text-8xl md:text-[10rem] leading-none tracking-[0.05em] mb-4 drop-shadow-lg">
+          <h1 className="font-bebas text-[#4DE8FF] text-8xl md:text-[10rem] leading-none tracking-[0.05em] mb-4 drop-shadow-lg" style={{textShadow: '0 0 30px rgba(77, 232, 255, 0.5), 0 0 60px rgba(77, 232, 255, 0.2)'}}>
             UNCOVERED
           </h1>
           <p className="text-gray-300 text-lg md:text-xl tracking-wider mb-8 font-inter">
@@ -142,7 +142,7 @@ export default function Home() {
             href={merchUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-dark text-neon font-bebas text-xl tracking-wider px-8 py-4 hover:shadow-neon transition-shadow"
+            className="inline-block bg-dark text-neon font-bebas text-xl tracking-wider px-8 py-4 rounded-full hover:shadow-neon transition-shadow"
           >
             SHOP NOW
           </a>
