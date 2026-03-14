@@ -46,13 +46,17 @@ export default function Home() {
         className="relative flex items-end justify-start grain-overlay"
         style={{ minHeight: '100dvh', minHeight: '100svh' }}
       >
-        {/* Background image — clipped inside its own wrapper */}
+        {/* Background image — mobile uses portrait crop, desktop uses landscape */}
         <div className="absolute inset-0 overflow-hidden">
-          <img
-            src="/brease_hero.png"
-            alt="UNCOVERED Hero"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-          />
+          <picture>
+            <source media="(max-width: 767px)" srcSet="/brease_hero916.png" />
+            <source media="(min-width: 768px)" srcSet="/brease_hero.png" />
+            <img
+              src="/brease_hero.png"
+              alt="UNCOVERED Hero"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+            />
+          </picture>
         </div>
 
         {/* Gradient overlay — dark vignette from bottom-left */}
