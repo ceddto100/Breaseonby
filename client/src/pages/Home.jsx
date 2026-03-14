@@ -42,40 +42,49 @@ export default function Home() {
       </Helmet>
 
       {/* HERO */}
-      <section className="relative h-screen min-h-[600px] flex items-end justify-start grain-overlay">
+      <section
+        className="relative flex items-end justify-start grain-overlay"
+        style={{ minHeight: '100dvh', minHeight: '100svh' }}
+      >
         {/* Background image — clipped inside its own wrapper */}
         <div className="absolute inset-0 overflow-hidden">
           <img
             src="/brease_hero.png"
             alt="UNCOVERED Hero"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
         </div>
 
         {/* Gradient overlay — dark vignette from bottom-left */}
         <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/40 to-transparent" />
-        {/* Bottom fade — extends slightly below section boundary for seamless bleed */}
+        {/* Bottom fade — seamless bleed into page */}
         <div className="absolute inset-x-0 bottom-0 pointer-events-none" style={{ height: '220px', background: 'linear-gradient(to bottom, transparent, #080808 75%)', zIndex: 3 }} />
 
-        {/* Content — bottom-left aligned like reference */}
-        <div className="relative z-10 px-8 md:px-16 pb-20 md:pb-28 max-w-3xl">
-          <h1 className="font-bebas text-[#4DE8FF] text-8xl md:text-[10rem] leading-none tracking-[0.05em] mb-4 drop-shadow-lg" style={{textShadow: '0 0 30px rgba(77, 232, 255, 0.5), 0 0 60px rgba(77, 232, 255, 0.2)'}}>
+        {/* Content — bottom-left aligned */}
+        <div className="relative z-10 px-5 sm:px-8 md:px-16 pb-24 sm:pb-20 md:pb-28 w-full max-w-3xl">
+          <h1
+            className="font-bebas text-[#4DE8FF] leading-none tracking-[0.05em] mb-3 drop-shadow-lg"
+            style={{
+              fontSize: 'clamp(3.5rem, 18vw, 10rem)',
+              textShadow: '0 0 30px rgba(77, 232, 255, 0.5), 0 0 60px rgba(77, 232, 255, 0.2)',
+            }}
+          >
             UNCOVERED
           </h1>
-          <p className="text-gray-300 text-lg md:text-xl tracking-wider mb-8 font-inter">
+          <p className="text-gray-300 text-base sm:text-lg md:text-xl tracking-wider mb-6 md:mb-8 font-inter">
             Every life has a story. We find it.
           </p>
 
           <Link
             to={featured ? `/biography/${featured._id}` : '/biographies'}
-            className="inline-block btn-neon text-xl px-10 py-4 tracking-widest"
+            className="inline-block btn-neon text-lg sm:text-xl px-8 sm:px-10 py-3 sm:py-4 tracking-widest"
           >
             WATCH
           </Link>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
           <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
