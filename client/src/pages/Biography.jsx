@@ -87,7 +87,7 @@ export default function Biography() {
               {/* Video player */}
               <div className="aspect-video bg-black rounded-lg overflow-hidden border border-dark-border">
                 <ReactPlayer
-                  url={video.cloudinaryUrl}
+                  url={/\.\w{3,4}$/.test(video.cloudinaryUrl) ? video.cloudinaryUrl : `${video.cloudinaryUrl}.mp4`}
                   width="100%"
                   height="100%"
                   controls
