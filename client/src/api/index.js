@@ -4,7 +4,7 @@ const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
 });
 
-// Attach token to admin requests
+// Attach token to requests
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('uncovered_token');
   if (token) {
@@ -24,9 +24,24 @@ export const deleteVideo = (id) => API.delete(`/api/videos/${id}`);
 
 // Admin
 export const adminLogin = (credentials) => API.post('/api/admin/login', credentials);
+export const getAdminStats = () => API.get('/api/admin/stats');
 
-// Subscribe
+// Auth
+export const getAuthUser = () => API.get('/api/auth/me');
+
+// Subscribe (email-based)
 export const subscribe = (email) => API.post('/api/subscribe', { email });
+
+// Subscribers (user-based)
+export const getSubscribers = () => API.get('/api/subscribers');
+export const getSubscriberCount = () => API.get('/api/subscribers/count');
+export const removeSubscriber = (id) => API.delete(`/api/subscribers/${id}`);
+export const exportSubscribers = () =>
+  API.get('/api/subscribers/export', { responseType: 'blob' });
+
+// Settings
+export const getSettings = () => API.get('/api/settings');
+export const updateSettings = (data) => API.patch('/api/settings', data);
 
 // Upload
 export const uploadVideoFile = (formData, onProgress) =>
