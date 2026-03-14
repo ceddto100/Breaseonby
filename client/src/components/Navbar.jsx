@@ -29,9 +29,11 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled || menuOpen
-          ? 'bg-dark/85 backdrop-blur-xl border-b border-dark-border shadow-[0_8px_30px_rgba(0,0,0,0.45)]'
-          : 'bg-transparent'
+        scrolled
+          ? 'bg-dark/80 backdrop-blur-md border-b border-dark-border'
+          : menuOpen
+            ? 'bg-dark/25 backdrop-blur-xl border-b border-dark-border/70'
+            : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -108,7 +110,7 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden pb-6 border-t border-dark-border bg-dark/70 backdrop-blur-2xl">
+          <div className="md:hidden pb-6 border-t border-dark-border/70 bg-dark/25 backdrop-blur-2xl">
             <div className="flex flex-col gap-4 pt-4">
               {navLinks.map((link) => (
                 <Link
