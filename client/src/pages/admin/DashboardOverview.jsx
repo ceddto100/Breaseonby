@@ -61,7 +61,7 @@ export default function DashboardOverview() {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
         {topVideosChart.length > 0 && (
-          <div className="bg-dark-card border border-dark-border rounded-lg p-6">
+          <div className="bg-dark-card border border-dark-border rounded-lg p-6 overflow-hidden">
             <h3 className="font-mono text-xs text-gray-500 uppercase tracking-wider mb-4">
               Top 5 Most Viewed
             </h3>
@@ -81,7 +81,7 @@ export default function DashboardOverview() {
         )}
 
         {/* Recent videos as a simple line-like display */}
-        <div className="bg-dark-card border border-dark-border rounded-lg p-6">
+        <div className="bg-dark-card border border-dark-border rounded-lg p-6 overflow-hidden">
           <h3 className="font-mono text-xs text-gray-500 uppercase tracking-wider mb-4">
             Views Distribution
           </h3>
