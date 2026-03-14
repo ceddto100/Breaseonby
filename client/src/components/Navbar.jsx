@@ -29,8 +29,8 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-dark/90 backdrop-blur-md border-b border-dark-border'
+        scrolled || menuOpen
+          ? 'bg-dark/85 backdrop-blur-xl border-b border-dark-border shadow-[0_8px_30px_rgba(0,0,0,0.45)]'
           : 'bg-transparent'
       }`}
     >
@@ -108,16 +108,16 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden pb-6 border-t border-dark-border">
+          <div className="md:hidden pb-6 border-t border-dark-border bg-dark/70 backdrop-blur-2xl">
             <div className="flex flex-col gap-4 pt-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`font-bebas text-xl tracking-wider ${
+                  className={`font-bebas text-xl tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] ${
                     location.pathname === link.to
                       ? 'text-neon'
-                      : 'text-off-white'
+                      : 'text-off-white hover:text-gold'
                   }`}
                 >
                   {link.label}
@@ -128,14 +128,14 @@ export default function Navbar() {
                   {isAdmin && (
                     <Link
                       to="/admin/dashboard"
-                      className="font-bebas text-xl tracking-wider text-gold"
+                      className="font-bebas text-xl tracking-wider text-gold drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
                     >
                       Dashboard
                     </Link>
                   )}
                   <Link
                     to="/account"
-                    className="font-bebas text-xl tracking-wider text-off-white"
+                    className="font-bebas text-xl tracking-wider text-off-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
                   >
                     My Account
                   </Link>
@@ -143,7 +143,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   to="/login"
-                  className="font-bebas text-xl tracking-wider text-neon"
+                  className="font-bebas text-xl tracking-wider text-neon drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
                 >
                   Sign In
                 </Link>
