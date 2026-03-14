@@ -3,24 +3,27 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import VideoCard from '../components/VideoCard';
 import AdUnit from '../components/AdUnit';
-import { getFeaturedVideos, getVideos, getPopularVideos } from '../api';
+import { getFeaturedVideos, getVideos, getPopularVideos, getSubscriberCount } from '../api';
 
 export default function Home() {
   const [featured, setFeatured] = useState(null);
   const [latest, setLatest] = useState([]);
   const [popular, setPopular] = useState([]);
+  const [subscriberCount, setSubscriberCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [featuredRes, latestRes, popularRes] = await Promise.all([
+        const [featuredRes, latestRes, popularRes, subCountRes] = await Promise.all([
           getFeaturedVideos(),
           getVideos({ sort: 'newest', limit: 3 }),
           getPopularVideos(),
+          getSubscriberCount(),
         ]);
         setFeatured(featuredRes.data[0] || null);
         setLatest(latestRes.data.videos || []);
         setPopular(popularRes.data || []);
+        setSubscriberCount(subCountRes.data.count || 0);
       } catch (err) {
         console.error('Failed to load homepage data:', err);
       }
@@ -78,6 +81,14 @@ export default function Home() {
                 {featured.subjectName}
               </h2>
               <p className="text-gray-300 text-lg mt-2">{featured.title}</p>
+            </div>
+          )}
+
+          {subscriberCount > 0 && (
+            <div className="mb-6">
+              <span className="inline-block font-mono text-xs text-neon uppercase tracking-widest border border-neon/30 bg-neon/5 px-4 py-2 rounded-full">
+                {subscriberCount.toLocaleString()} SUBSCRIBERS
+              </span>
             </div>
           )}
 

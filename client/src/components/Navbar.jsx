@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import UserAvatar from './UserAvatar';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -54,6 +57,27 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {isAuthenticated ? (
+              <div className="flex items-center gap-4">
+                {isAdmin && (
+                  <Link
+                    to="/admin/dashboard"
+                    className="font-bebas text-lg tracking-wider text-gold hover:text-neon transition-colors duration-200"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                <UserAvatar />
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="btn-neon px-5 py-2 font-bebas text-lg tracking-wider"
+              >
+                SIGN IN
+              </Link>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -99,6 +123,31 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              {isAuthenticated ? (
+                <>
+                  {isAdmin && (
+                    <Link
+                      to="/admin/dashboard"
+                      className="font-bebas text-xl tracking-wider text-gold"
+                    >
+                      Dashboard
+                    </Link>
+                  )}
+                  <Link
+                    to="/account"
+                    className="font-bebas text-xl tracking-wider text-off-white"
+                  >
+                    My Account
+                  </Link>
+                </>
+              ) : (
+                <Link
+                  to="/login"
+                  className="font-bebas text-xl tracking-wider text-neon"
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
         )}

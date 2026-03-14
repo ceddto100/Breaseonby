@@ -48,6 +48,11 @@ const videoSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  status: {
+    type: String,
+    enum: ['published', 'draft'],
+    default: 'published',
+  },
   createdAt: {
     type: Date,
     default: Date.now,
