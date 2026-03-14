@@ -19,6 +19,7 @@ import UploadVideo from './pages/admin/UploadVideo';
 import ManageVideos from './pages/admin/ManageVideos';
 import Subscribers from './pages/admin/Subscribers';
 import AdminSettings from './pages/admin/AdminSettings';
+import ShootingStars from './components/ShootingStars';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
       <AuthProvider>
         <Router>
           <div className="min-h-screen flex flex-col bg-dark">
+            <ShootingStars />
             <Navbar />
             <main className="flex-1">
               <Routes>

@@ -3,27 +3,23 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import VideoCard from '../components/VideoCard';
 import AdUnit from '../components/AdUnit';
-import { getFeaturedVideos, getVideos, getPopularVideos, getSubscriberCount } from '../api';
+import { getFeaturedVideos, getVideos, getPopularVideos } from '../api';
 
 export default function Home() {
   const [featured, setFeatured] = useState(null);
   const [latest, setLatest] = useState([]);
   const [popular, setPopular] = useState([]);
-  const [subscriberCount, setSubscriberCount] = useState(0);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [featuredRes, latestRes, popularRes, subCountRes] = await Promise.all([
+        const [featuredRes, latestRes, popularRes] = await Promise.all([
           getFeaturedVideos(),
           getVideos({ sort: 'newest', limit: 3 }),
           getPopularVideos(),
-          getSubscriberCount(),
         ]);
         setFeatured(featuredRes.data[0] || null);
         setLatest(latestRes.data.videos || []);
         setPopular(popularRes.data || []);
-        setSubscriberCount(subCountRes.data.count || 0);
       } catch (err) {
         console.error('Failed to load homepage data:', err);
       }
@@ -46,67 +42,69 @@ export default function Home() {
       </Helmet>
 
       {/* HERO */}
-      <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden grain-overlay">
-        {/* Background video */}
-        {featured?.cloudinaryUrl && (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-30"
+      <section
+        className="relative flex items-end justify-start grain-overlay"
+        style={{ minHeight: '100dvh', minHeight: '100svh' }}
+      >
+        {/* Background image — mobile uses portrait crop, desktop uses landscape */}
+        <div className="absolute inset-0 overflow-hidden">
+          <picture>
+            <source media="(max-width: 767px)" srcSet="/brease_hero916.png" />
+            <source media="(min-width: 768px)" srcSet="/brease_hero.png" />
+            <img
+              src="/brease_hero.png"
+              alt="UNCOVERED Hero"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+            />
+          </picture>
+        </div>
+
+        {/* Gradient overlay — dark vignette from bottom-left */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/40 to-transparent" />
+        {/* Bottom fade — seamless bleed into page */}
+        <div className="absolute inset-x-0 bottom-0 pointer-events-none" style={{ height: '220px', background: 'linear-gradient(to bottom, transparent, #080808 75%)', zIndex: 3 }} />
+
+        {/* Content — bottom-left aligned */}
+        <div className="relative z-10 px-5 sm:px-8 md:px-16 pb-24 sm:pb-20 md:pb-28 w-full max-w-3xl">
+          <h1
+            className="font-bebas text-[#4DE8FF] leading-none tracking-[0.05em] mb-3 drop-shadow-lg"
+            style={{
+              fontSize: 'clamp(3.5rem, 18vw, 10rem)',
+              textShadow: '0 0 30px rgba(77, 232, 255, 0.5), 0 0 60px rgba(77, 232, 255, 0.2)',
+            }}
           >
-            <source src={featured.cloudinaryUrl} type="video/mp4" />
-          </video>
-        )}
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-dark/40" />
-
-        {/* Content */}
-        <div className="relative z-10 text-center px-4 max-w-4xl">
-          <h1 className="font-bebas text-gold text-7xl md:text-9xl tracking-[0.2em] mb-4">
             UNCOVERED
           </h1>
-          <p className="text-gray-400 text-lg md:text-xl tracking-wider mb-8 font-inter">
+          <p className="text-gray-300 text-base sm:text-lg md:text-xl tracking-wider mb-6 md:mb-8 font-inter">
             Every life has a story. We find it.
           </p>
 
-          {featured && (
-            <div className="mb-8">
-              <p className="font-mono text-neon text-sm uppercase tracking-widest mb-2">
-                Now Featuring
-              </p>
-              <h2 className="font-bebas text-gold text-4xl md:text-6xl tracking-wider">
-                {featured.subjectName}
-              </h2>
-              <p className="text-gray-300 text-lg mt-2">{featured.title}</p>
-            </div>
-          )}
-
-          {subscriberCount > 0 && (
-            <div className="mb-6">
-              <span className="inline-block font-mono text-xs text-neon uppercase tracking-widest border border-neon/30 bg-neon/5 px-4 py-2 rounded-full">
-                {subscriberCount.toLocaleString()} SUBSCRIBERS
-              </span>
-            </div>
-          )}
-
           <Link
             to={featured ? `/biography/${featured._id}` : '/biographies'}
-            className="inline-block btn-neon text-xl px-10 py-4"
+            className="inline-block btn-neon text-lg sm:text-xl px-8 sm:px-10 py-3 sm:py-4 tracking-widest"
           >
-            WATCH NOW
+            WATCH
           </Link>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
+          <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
       </section>
+
+      {/* Seamless fade from hero into page — overlaps top of AdUnit */}
+      <div
+        className="relative pointer-events-none"
+        style={{
+          marginTop: '-160px',
+          height: '200px',
+          background: 'linear-gradient(to bottom, transparent 0%, #080808 70%)',
+          zIndex: 20,
+        }}
+      />
 
       {/* AD: Leaderboard below hero */}
       <AdUnit size="leaderboard" />
@@ -171,7 +169,7 @@ export default function Home() {
             href={merchUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-dark text-neon font-bebas text-xl tracking-wider px-8 py-4 hover:shadow-neon transition-shadow"
+            className="inline-block bg-dark text-neon font-bebas text-xl tracking-wider px-8 py-4 rounded-full hover:shadow-neon transition-shadow"
           >
             SHOP NOW
           </a>
