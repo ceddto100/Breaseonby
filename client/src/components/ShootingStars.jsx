@@ -8,13 +8,13 @@ export default function ShootingStars() {
     if (!container) return;
 
     const createStar = () => {
-      // Travel direction: mostly upward with slight horizontal drift
-      const dx = (Math.random() - 0.5) * 200;        // -100 to 100 px
-      const dy = -(400 + Math.random() * 250);         // -400 to -650 px (upward)
+      // Travel direction: upper-right (positive dx, negative dy)
+      const dx = 150 + Math.random() * 300;            // 150 to 450 px (rightward)
+      const dy = -(350 + Math.random() * 250);         // -350 to -600 px (upward)
       const angle = Math.atan2(dy, dx) * (180 / Math.PI);
 
-      const startX = Math.random() * 95;               // vw
-      const startY = 30 + Math.random() * 60;          // vh — lower/mid area
+      const startX = Math.random() * 60;               // vw — bias left so stars cross screen
+      const startY = 20 + Math.random() * 70;          // vh — spread vertically
       const duration = 0.9 + Math.random() * 1.3;
       const tailLen = 160 + Math.random() * 200;       // px — long tail
       const thickness = 2 + Math.random() * 3;         // px

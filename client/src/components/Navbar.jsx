@@ -38,7 +38,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center">
             <span className="font-bebas text-gold text-3xl md:text-4xl tracking-widest">
-              UNCOVERED
+              Breaseonby
             </span>
           </Link>
 
