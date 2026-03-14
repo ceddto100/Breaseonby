@@ -48,7 +48,7 @@ export default function Footer() {
             </h4>
             <div className="flex gap-4">
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@BreaseonbyUncovered"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-dark-border flex items-center justify-center text-gray-400 hover:text-neon hover:border-neon hover:shadow-neon transition-all"
@@ -58,7 +58,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/breaseonbyuncovered/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-dark-border flex items-center justify-center text-gray-400 hover:text-neon-red hover:border-neon-red hover:shadow-neon-red transition-all"
