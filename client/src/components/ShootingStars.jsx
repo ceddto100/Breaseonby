@@ -1,5 +1,15 @@
 import { useEffect, useRef } from 'react';
 
+// Stars shoot from upper-right toward lower-left, like real shooting stars
+const KEYFRAMES = `
+  @keyframes star-move {
+    0%   { transform: translate(0, 0); opacity: 0; }
+    6%   { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { transform: translate(-550px, 400px); opacity: 0; }
+  }
+`;
+
 export default function ShootingStars() {
   const containerRef = useRef(null);
 
@@ -7,39 +17,57 @@ export default function ShootingStars() {
     const container = containerRef.current;
     if (!container) return;
 
+    // Inject keyframe once
+    const style = document.createElement('style');
+    style.textContent = KEYFRAMES;
+    document.head.appendChild(style);
+
     const createStar = () => {
-      const star = document.createElement('div');
-      star.className = 'shooting-star';
+      // Wrapper handles the movement (upper-right → lower-left)
+      const wrapper = document.createElement('div');
+      // Inner element is the visual streak, rotated to match travel direction
+      const streak = document.createElement('div');
 
-      // Random start position across the full viewport
-      star.style.left = Math.random() * 100 + 'vw';
-      star.style.top = Math.random() * 60 + 'vh';
+      const startX = 30 + Math.random() * 70;   // vw — bias toward right side
+      const startY = Math.random() * 45;          // vh — upper half of screen
+      const duration = 0.8 + Math.random() * 1.4;
+      const tailLen = 140 + Math.random() * 180;  // px — long tails
+      const thickness = 2 + Math.random() * 3;    // px — thicker streaks
 
-      // Vary size and speed
-      const duration = 1 + Math.random() * 1.5;
-      const size = 1 + Math.random() * 2;
-      star.style.width = size + 'px';
-      star.style.height = size + 'px';
-      star.style.animationDuration = duration + 's';
+      Object.assign(wrapper.style, {
+        position: 'absolute',
+        left: `${startX}vw`,
+        top: `${startY}vh`,
+        animation: `star-move ${duration}s ease-out forwards`,
+      });
 
-      container.appendChild(star);
+      Object.assign(streak.style, {
+        width: `${tailLen}px`,
+        height: `${thickness}px`,
+        borderRadius: '50px',
+        // Gradient: right=bright (head), left=transparent (tail)
+        background: 'linear-gradient(to right, transparent, rgba(77, 232, 255, 0.4), #4DE8FF)',
+        boxShadow: `0 0 ${thickness * 3}px ${thickness + 1}px rgba(77, 232, 255, 0.55)`,
+        // 135deg orients the bright (right) end toward lower-left — matching travel direction
+        transform: 'rotate(135deg)',
+        transformOrigin: 'right center',
+      });
 
-      setTimeout(() => {
-        star.remove();
-      }, duration * 1000);
+      wrapper.appendChild(streak);
+      container.appendChild(wrapper);
+      setTimeout(() => wrapper.remove(), (duration + 0.15) * 1000);
     };
 
-    // Spawn shooting stars at random intervals
+    let timeoutId;
     const spawn = () => {
       createStar();
-      const nextDelay = 600 + Math.random() * 2000;
-      timeoutId = setTimeout(spawn, nextDelay);
+      timeoutId = setTimeout(spawn, 400 + Math.random() * 1800);
     };
-
-    let timeoutId = setTimeout(spawn, 500);
+    timeoutId = setTimeout(spawn, 200);
 
     return () => {
       clearTimeout(timeoutId);
+      style.remove();
       if (container) container.innerHTML = '';
     };
   }, []);

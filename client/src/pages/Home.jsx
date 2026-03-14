@@ -42,17 +42,20 @@ export default function Home() {
       </Helmet>
 
       {/* HERO */}
-      <section className="relative h-screen min-h-[600px] flex items-end justify-start overflow-hidden grain-overlay">
-        {/* Background image */}
-        <img
-          src="/brease_hero.png"
-          alt="UNCOVERED Hero"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+      <section className="relative h-screen min-h-[600px] flex items-end justify-start grain-overlay">
+        {/* Background image — clipped inside its own wrapper */}
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src="/brease_hero.png"
+            alt="UNCOVERED Hero"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
 
-        {/* Gradient overlay — dark vignette from bottom-left + fade to dark at bottom */}
+        {/* Gradient overlay — dark vignette from bottom-left */}
         <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent" />
+        {/* Bottom fade — extends slightly below section boundary for seamless bleed */}
+        <div className="absolute inset-x-0 bottom-0 pointer-events-none" style={{ height: '220px', background: 'linear-gradient(to bottom, transparent, #080808 75%)', zIndex: 3 }} />
 
         {/* Content — bottom-left aligned like reference */}
         <div className="relative z-10 px-8 md:px-16 pb-20 md:pb-28 max-w-3xl">
@@ -78,6 +81,17 @@ export default function Home() {
           </svg>
         </div>
       </section>
+
+      {/* Seamless fade from hero into page — overlaps top of AdUnit */}
+      <div
+        className="relative pointer-events-none"
+        style={{
+          marginTop: '-160px',
+          height: '200px',
+          background: 'linear-gradient(to bottom, transparent 0%, #080808 70%)',
+          zIndex: 20,
+        }}
+      />
 
       {/* AD: Leaderboard below hero */}
       <AdUnit size="leaderboard" />
