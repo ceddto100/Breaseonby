@@ -6,6 +6,21 @@ import VideoCard from '../components/VideoCard';
 import AdUnit from '../components/AdUnit';
 import { getVideo, getVideos } from '../api';
 
+
+const ensurePlayableVideoUrl = (url = '') => {
+  if (!url) return '';
+
+  const [base, query = ''] = url.split('?');
+  const [pathWithoutHash, hash = ''] = base.split('#');
+
+  if (/\.[a-z0-9]{3,4}$/i.test(pathWithoutHash)) {
+    return url;
+  }
+
+  const rebuilt = `${pathWithoutHash}.mp4${hash ? `#${hash}` : ''}`;
+  return query ? `${rebuilt}?${query}` : rebuilt;
+};
+
 export default function Biography() {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
@@ -87,7 +102,7 @@ export default function Biography() {
               {/* Video player */}
               <div className="aspect-video bg-black rounded-lg overflow-hidden border border-dark-border">
                 <ReactPlayer
-                  url={/\.\w{3,4}$/.test(video.cloudinaryUrl) ? video.cloudinaryUrl : `${video.cloudinaryUrl}.mp4`}
+                  url={ensurePlayableVideoUrl(video.cloudinaryUrl)}
                   width="100%"
                   height="100%"
                   controls

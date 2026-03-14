@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
@@ -21,50 +21,59 @@ import Subscribers from './pages/admin/Subscribers';
 import AdminSettings from './pages/admin/AdminSettings';
 import ShootingStars from './components/ShootingStars';
 
+function AppLayout() {
+  const location = useLocation();
+  const isBiographyPage = location.pathname.startsWith('/biography/');
+
+  return (
+    <div className="min-h-screen flex flex-col bg-dark">
+      {!isBiographyPage && <ShootingStars />}
+      <Navbar />
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/biographies" element={<Biographies />} />
+          <Route path="/biography/:id" element={<Biography />} />
+          <Route path="/merch" element={<Merch />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route
+            path="/account"
+            element={
+              <ProtectedRoute>
+                <Account />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requireAdmin>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="dashboard" element={<DashboardOverview />} />
+            <Route path="upload" element={<UploadVideo />} />
+            <Route path="videos" element={<ManageVideos />} />
+            <Route path="subscribers" element={<Subscribers />} />
+            <Route path="settings" element={<AdminSettings />} />
+          </Route>
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <HelmetProvider>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen flex flex-col bg-dark">
-            <ShootingStars />
-            <Navbar />
-            <main className="flex-1">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/biographies" element={<Biographies />} />
-                <Route path="/biography/:id" element={<Biography />} />
-                <Route path="/merch" element={<Merch />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/auth/callback" element={<AuthCallback />} />
-                <Route
-                  path="/account"
-                  element={
-                    <ProtectedRoute>
-                      <Account />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/admin/login" element={<AdminLogin />} />
-                <Route
-                  path="/admin"
-                  element={
-                    <ProtectedRoute requireAdmin>
-                      <AdminLayout />
-                    </ProtectedRoute>
-                  }
-                >
-                  <Route path="dashboard" element={<DashboardOverview />} />
-                  <Route path="upload" element={<UploadVideo />} />
-                  <Route path="videos" element={<ManageVideos />} />
-                  <Route path="subscribers" element={<Subscribers />} />
-                  <Route path="settings" element={<AdminSettings />} />
-                </Route>
-              </Routes>
-            </main>
-            <Footer />
-          </div>
+          <AppLayout />
         </Router>
       </AuthProvider>
     </HelmetProvider>
