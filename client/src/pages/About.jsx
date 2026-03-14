@@ -73,7 +73,7 @@ export default function About() {
         </h2>
         <div className="flex justify-center gap-6">
           <a
-            href="https://youtube.com"
+            href="https://www.youtube.com/@BreaseonbyUncovered"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center gap-2 group"
@@ -86,7 +86,7 @@ export default function About() {
             <span className="font-mono text-xs text-gray-500 uppercase">YouTube</span>
           </a>
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/breaseonbyuncovered/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center gap-2 group"
