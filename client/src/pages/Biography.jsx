@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import ReactPlayer from 'react-player';
+
 import VideoCard from '../components/VideoCard';
 import AdUnit from '../components/AdUnit';
 import { getVideo, getVideos } from '../api';
@@ -101,19 +101,14 @@ export default function Biography() {
             <div>
               {/* Video player */}
               <div className="aspect-video bg-black rounded-lg overflow-hidden border border-dark-border">
-                <ReactPlayer
-                  url={ensurePlayableVideoUrl(video.cloudinaryUrl)}
-                  width="100%"
-                  height="100%"
+                <video
+                  src={ensurePlayableVideoUrl(video.cloudinaryUrl)}
+                  poster={video.thumbnailUrl}
                   controls
-                  playing={false}
-                  config={{
-                    file: {
-                      attributes: {
-                        controlsList: 'nodownload',
-                      },
-                    },
-                  }}
+                  controlsList="nodownload"
+                  preload="metadata"
+                  playsInline
+                  style={{ width: '100%', height: '100%', display: 'block' }}
                 />
               </div>
 
